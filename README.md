@@ -38,7 +38,8 @@
    ```
 
 ## test
-
+   ```
    cd analysis/test
    
    source run.sh
+   ```
