@@ -43,3 +43,10 @@
    
    source run.sh
    ```
+
+## generate scripts for condor jobs
+   ```
+   cd Condor
+   
+   python condor.py
+   ```
