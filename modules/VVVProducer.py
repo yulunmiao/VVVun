@@ -27,12 +27,15 @@ def Process_4Lepton(event):
     if ( (event.nElectron+event.nMuon) < 4 ): return False
     return True
 
+def Process_inclusive(event):
+    return True
 
 class VVVProducer(Module):
   def __init__(self , year, MODE = "1Lepton" ):
     self.year = year
     self.MODE = MODE
     self.Process_Genparticles = False
+    if self.MODE == "inclusive": self.function = Process_inclusive
     if self.MODE == "0Lepton": self.function = Process_0Lepton
     if self.MODE == "1Lepton": self.function = Process_1Lepton
     if self.MODE == "2Lepton": self.function = Process_2Lepton
@@ -55,16 +58,19 @@ class VVVProducer(Module):
     # PV selection
     return (self.function)(event)
 
+VVV2016         = lambda MODE="inclusive": VVVProducer("2016","inclusive")
 VVV2016_0Lepton = lambda MODE="inclusive": VVVProducer("2016","0Lepton")
 VVV2016_1Lepton = lambda MODE="inclusive": VVVProducer("2016","1Lepton")
 VVV2016_2Lepton = lambda MODE="inclusive": VVVProducer("2016","2Lepton")
 VVV2016_4Lepton = lambda MODE="inclusive": VVVProducer("2016","4Lepton")
 
+VVV2018         = lambda MODE="inclusive": VVVProducer("2017","inclusive")
 VVV2017_0Lepton = lambda MODE="inclusive": VVVProducer("2017","0Lepton")
 VVV2017_1Lepton = lambda MODE="inclusive": VVVProducer("2017","1Lepton")
 VVV2017_2Lepton = lambda MODE="inclusive": VVVProducer("2017","2Lepton")
 VVV2017_4Lepton = lambda MODE="inclusive": VVVProducer("2017","4Lepton")
 
+VVV2018         = lambda MODE="inclusive": VVVProducer("2018","inclusive")
 VVV2018_0Lepton = lambda MODE="inclusive": VVVProducer("2018","0Lepton")
 VVV2018_1Lepton = lambda MODE="inclusive": VVVProducer("2018","1Lepton")
 VVV2018_2Lepton = lambda MODE="inclusive": VVVProducer("2018","2Lepton")
