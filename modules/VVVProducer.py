@@ -64,7 +64,7 @@ VVV2016_1Lepton = lambda MODE="inclusive": VVVProducer("2016","1Lepton")
 VVV2016_2Lepton = lambda MODE="inclusive": VVVProducer("2016","2Lepton")
 VVV2016_4Lepton = lambda MODE="inclusive": VVVProducer("2016","4Lepton")
 
-VVV2018         = lambda MODE="inclusive": VVVProducer("2017","inclusive")
+VVV2017         = lambda MODE="inclusive": VVVProducer("2017","inclusive")
 VVV2017_0Lepton = lambda MODE="inclusive": VVVProducer("2017","0Lepton")
 VVV2017_1Lepton = lambda MODE="inclusive": VVVProducer("2017","1Lepton")
 VVV2017_2Lepton = lambda MODE="inclusive": VVVProducer("2017","2Lepton")
