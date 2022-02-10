@@ -53,9 +53,10 @@ def main():
     if opt.year == "2016pre":
       p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorrUL16_preVFP() ,muonIDISOSF2016pre() ,muonScaleRes2016a(),eleRECOSF2016pre() ,eleIDSF2016pre() ,jmeCorrections(),jetmetCorrector(),VVV2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     if opt.year == "2017":
-      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2017(),PrefCorrUL17(),        muonIDISOSF2017()    ,muonScaleRes2017() , eleRECOSF2017()    ,eleIDSF2017(),    jmeCorrections(),VVV2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2017(),PrefCorrUL17(),        muonIDISOSF2017()    ,muonScaleRes2017() , eleRECOSF2017()    ,eleIDSF2017(),    jmeCorrections(),jetmetCorrector(),VVV2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     if opt.year == "2018":
-      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2018(),                       muonIDISOSF2018(),    muonScaleRes2018() , eleRECOSF2018()    ,eleIDSF2018(),    jmeCorrections(),VVV2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2018(),                       muonIDISOSF2018(),    muonScaleRes2018() , eleRECOSF2018()    ,eleIDSF2018(),    jmeCorrections(),jetmetCorrector(),VVV2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+    p.run()
 
 # Sequence for data
   if not (opt.ismc):
