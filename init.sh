@@ -17,7 +17,7 @@ cp $WORKING_PATH/analysis/others/for_prefiring/*.root $CMSSW_BASE/src/PhysicsToo
 # cp $WORKING_PATH/analysis/others/for_prefiring/PrefireCorr.py $WORKING_PATH/modules/common/
 
 echo Updateing JME correction
-# cp $WORKING_PATH/analysis/others/for_jme/*.tgz $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
+cp $WORKING_PATH/analysis/others/for_jme/*.tgz $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
 # cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
 cp $WORKING_PATH/analysis/others/for_jme/fatJetUncertainties.py $WORKING_PATH/modules/jme
 
