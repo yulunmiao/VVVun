@@ -35,34 +35,40 @@ def main():
   PrefCorrUL16_preVFP = lambda : PrefCorr(jetroot="L1PrefiringMaps.root", jetmapname="L1prefiring_jetptvseta_UL2016preVFP", photonroot="L1PrefiringMaps.root", photonmapname="L1prefiring_photonptvseta_UL2016preVFP", branchnames=["PrefireWeight","PrefireWeight_Up", "PrefireWeight_Down"])
   PrefCorrUL16_postVFP = lambda : PrefCorr(jetroot="L1PrefiringMaps.root", jetmapname="L1prefiring_jetptvseta_UL2016postVFP", photonroot="L1PrefiringMaps.root", photonmapname="L1prefiring_photonptvseta_UL2016postVFP", branchnames=["PrefireWeight","PrefireWeight_Up", "PrefireWeight_Down"])
   PrefCorrUL17 = lambda : PrefCorr(jetroot="L1PrefiringMaps.root", jetmapname="L1prefiring_jetptvseta_UL2017BtoF", photonroot="L1PrefiringMaps.root", photonmapname="L1prefiring_photonptvseta_UL2017BtoF", branchnames=["PrefireWeight","PrefireWeight_Up", "PrefireWeight_Down"])
+
+  jesUncertainties='AbsoluteStat,AbsoluteScale,AbsoluteMPFBias,Fragmentation,SinglePionECAL,SinglePionHCAL,FlavorQCD,TimePtEta,RelativeJEREC1,RelativeJEREC2,RelativeJERHF,RelativePtBB,RelativePtEC1,RelativePtEC2,RelativePtHF,RelativeBal,RelativeSample,RelativeFSR,RelativeStatFSR,RelativeStatEC,RelativeStatHF,PileUpDataMC,PileUpPtRef,PileUpPtBB,PileUpPtEC1,PileUpPtEC2,PileUpPtHF,Total'
   
   if opt.ismc:
     if "2016" in opt.year:
 #      jmeCorrections  = createJMECorrector(opt.ismc, "UL2016", opt.year[4:].upper(), "Total", "AK8PFPuppi")
 #      jetmetCorrector = createJMECorrector(opt.ismc, "UL2016", jesUncert="Total", metBranchName="MET", splitJER=False, applyHEMfix=True)
-      jmeCorrections  = createJMECorrector(opt.ismc, "UL2016", opt.year[4:].upper(), "All", "AK8PFPuppi")
-      jetmetCorrector = createJMECorrector(opt.ismc, "UL2016", jesUncert="All", metBranchName="MET", splitJER=False, applyHEMfix=True)
+      jmeCorrections  = createJMECorrector(opt.ismc, "UL2016", opt.year[4:].upper(), jesUncertainties, "AK8PFPuppi")
+      jetmetCorrector = createJMECorrector(opt.ismc, "UL2016", jesUncert=jesUncertainties, metBranchName="MET", splitJER=False, applyHEMfix=True, saveMETUncs=["T1Smear"])
     if "2017" in opt.year:
 #      jmeCorrections  = createJMECorrector(opt.ismc, "UL2017", opt.year[4:].upper(), "Total","AK8PFPuppi")
 #      jetmetCorrector = createJMECorrector(opt.ismc, "UL2017", jesUncert="Total", metBranchName="MET", splitJER=False, applyHEMfix=True)
-      jmeCorrections  = createJMECorrector(opt.ismc, "UL2017", opt.year[4:].upper(), "All","AK8PFPuppi")
-      jetmetCorrector = createJMECorrector(opt.ismc, "UL2017", jesUncert="All", metBranchName="MET", splitJER=False, applyHEMfix=True)
+      jmeCorrections  = createJMECorrector(opt.ismc, "UL2017", opt.year[4:].upper(), jesUncertainties,,"AK8PFPuppi")
+      jetmetCorrector = createJMECorrector(opt.ismc, "UL2017", jesUncert=jesUncertainties, metBranchName="MET", splitJER=False, applyHEMfix=True, saveMETUncs=["T1Smear"])
     if "2018" in opt.year:
 #      jmeCorrections  = createJMECorrector(opt.ismc, "UL2018", opt.year[4:].upper(), "Total","AK8PFPuppi")
 #      jetmetCorrector = createJMECorrector(opt.ismc, "UL2018", jesUncert="Total", metBranchName="MET", splitJER=False, applyHEMfix=True)
-      jmeCorrections  = createJMECorrector(opt.ismc, "UL2018", opt.year[4:].upper(), "All","AK8PFPuppi")
-      jetmetCorrector = createJMECorrector(opt.ismc, "UL2018", jesUncert="All", metBranchName="MET", splitJER=False, applyHEMfix=True)
+      jmeCorrections  = createJMECorrector(opt.ismc, "UL2018", opt.year[4:].upper(), jesUncertainties,"AK8PFPuppi")
+      jetmetCorrector = createJMECorrector(opt.ismc, "UL2018", jesUncert=jesUncertainties, metBranchName="MET", splitJER=False, applyHEMfix=True, saveMETUncs=["T1Smear"])
 
 
   if opt.ismc:
     if opt.year == "2016post":
-      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorrUL16_postVFP(),muonIDISOSF2016post(),muonScaleRes2016b(),eleRECOSF2016post(),eleIDSF2016post(),jmeCorrections(),jetmetCorrector(),VVV2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+#      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorrUL16_postVFP(),muonIDISOSF2016post(),muonScaleRes2016b(),eleRECOSF2016post(),eleIDSF2016post(),jmeCorrections(),jetmetCorrector(),VVV2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[puAutoWeight_2016(),PrefCorrUL16_postVFP(),jmeCorrections(),jetmetCorrector()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     if opt.year == "2016pre":
-      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorrUL16_preVFP() ,muonIDISOSF2016pre() ,muonScaleRes2016a(),eleRECOSF2016pre() ,eleIDSF2016pre() ,jmeCorrections(),jetmetCorrector(),VVV2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+#      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2016(),PrefCorrUL16_preVFP() ,muonIDISOSF2016pre() ,muonScaleRes2016a(),eleRECOSF2016pre() ,eleIDSF2016pre() ,jmeCorrections(),jetmetCorrector(),VVV2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[puAutoWeight_2016(),PrefCorrUL16_preVFP() ,jmeCorrections(),jetmetCorrector()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     if opt.year == "2017":
-      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2017(),PrefCorrUL17(),        muonIDISOSF2017()    ,muonScaleRes2017() , eleRECOSF2017()    ,eleIDSF2017(),    jmeCorrections(),jetmetCorrector(),VVV2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+#      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2017(),PrefCorrUL17(),        muonIDISOSF2017()    ,muonScaleRes2017() , eleRECOSF2017()    ,eleIDSF2017(),    jmeCorrections(),jetmetCorrector(),VVV2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[puAutoWeight_2017(),PrefCorrUL17(),        jmeCorrections(),jetmetCorrector()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     if opt.year == "2018":
-      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2018(),                       muonIDISOSF2018(),    muonScaleRes2018() , eleRECOSF2018()    ,eleIDSF2018(),    jmeCorrections(),jetmetCorrector(),VVV2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+#      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[countHistogramsModule(),puAutoWeight_2018(),                       muonIDISOSF2018(),    muonScaleRes2018() , eleRECOSF2018()    ,eleIDSF2018(),    jmeCorrections(),jetmetCorrector(),VVV2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
+      p = PostProcessor(opt.output, opt.inputs.rstrip(",").split(","), modules=[puAutoWeight_2018(),                       jmeCorrections(),jetmetCorrector()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis())
     p.run()
 
 # Sequence for data
